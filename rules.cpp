@@ -2,7 +2,11 @@
 #include <string>
 #include <map>
 #include "knowledge.cpp"
-/**/
+
+/*the knowledge base is filled with the multiple of 10 equal to the rule and
+the indexes of the variables required to be true (whos value can be input into
+varsStatus from the knowledge.cpp to get said T/F status)*/
+
 class Rules{
     private:
     std::string conclusion = ""; //what this whole thing returns eventually
@@ -12,7 +16,7 @@ class Rules{
         {/*required variables for rule at each index to be satisfied*/}
     }; //the other half of the knowledge base
     std::map<int, std::vector<int>> KB = KB_fill(ruleCount, varsCombo); //the knowledge base, weird this is in the rules class aint it?
-    
+
     std::map<int, std::vector<int>> KB_fill(std::vector<int> rule, std::vector<std::vector<int>> vars) {
         std::map<int, std::vector<int>> ruleVars;
         for (int i = 0; i < rule.size(); i++) {
@@ -20,7 +24,6 @@ class Rules{
         }
         return ruleVars;
     }
-
     public:
 
 };
