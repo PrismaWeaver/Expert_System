@@ -25,5 +25,10 @@ class Rules{
         return ruleVars;
     }
     public:
-
+    //need to add:
+    //>the stack which holds the current rule being evaluated
+    //a method to navigate through the stack, check the T/F status of variables
+    //and prompt the user to fill in the variables reuired, and skip the rule if
+    //variables are found to not match the rule, and if all variable conditions are
+    //met, return the concluson whos index is pointed to by the rule # / 10
 };
