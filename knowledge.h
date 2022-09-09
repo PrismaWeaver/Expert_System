@@ -44,4 +44,4 @@ class Knowledge {
         }
         return CVL;
     }
-};
+}
