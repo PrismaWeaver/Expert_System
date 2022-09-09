@@ -30,6 +30,13 @@ class Rules{
         return ruleVars;
     }
 
+    void stack_fill(Stack stack) {
+        Knowledge know;
+        for (int i = know.ruleNum; i >= 0; i--) {
+            stack.push((i + 1) * 10)
+        }
+    }
+
     public:
     Rules();
     ~Rules();

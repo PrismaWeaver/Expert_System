@@ -16,15 +16,12 @@ Stack::~Stack() {
 	}
 }
 
-bool Stack::push(int rule, string vars) {
+bool Stack::push(int rule) {
 	bool success = false;
 	//test if stack not full, rule possitive, and string not empty
 	if (top < STACK_SIZE - 1 && rule > 0 && !vars.empty()) {
-		//dynamically allocate Data struct
-		Data* ptr = new Data;
-		//fill struct
-		ptr->rule = rule;
-		ptr->vars = vars;
+		int* ptr = new int;
+		ptr = rule;
 		//increment stack and push pointer to stack
 		stack[++top] = ptr;
 		success = true;
@@ -32,39 +29,30 @@ bool Stack::push(int rule, string vars) {
 	return success;
 }
 
-bool Stack::pop(Data *point) {
+bool Stack::pop() {
 	bool success = false;
 	if (!isEmpty()) {
-		//fill point with data from stack
-		point->rule = stack[top]->rule;
-		point->vars = stack[top]->vars;
 		//deallocate pointer and decrement top
 		delete stack[top--];
 		success = true;
 	}
-	//fills passed struct with bunk data
 	else {
-		point->rule = -1;
-		point->vars = "";
 		success = false;
 	}
 	return success;
 }
 
-bool Stack::peek(Data *point) {
-	bool success = false;
+int Stack::peek() {
+	int ruleTop;
 	if (!isEmpty()) {
 		//fill point with data from stack
-		point = stack[top];
-		success = true;
+		ruleTop = stack[top];
 	}
 	//fills passed struct with bunk data
 	else {
-		point->rule = -1;
-		point->vars = "";
-		success = false;
+		ruleTop = -1;
 	}
-	return success;
+	return ruleTop;
 }
 
 bool Stack::isEmpty() {

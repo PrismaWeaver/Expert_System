@@ -9,11 +9,6 @@ Purpose: create and test a simple stack using pointers
 #include <string>
 #define STACK_SIZE 30
 
-struct Data {
-    int rule;
-    std::string vars;
-};
-
 class Stack {
 public:
 
@@ -25,15 +20,14 @@ public:
 
     //functions
     bool push(int, string);
-    bool pop(Data*);
-    bool peek(Data*);
+    bool pop();
+    int peek();
     bool isEmpty();
     
 private:
 
-    // these are the only attributes you need. do not modify them or add any
     int top; // this is your top index
-    Data *stack[STACK_SIZE]; // this is your stack, it is an array of Data pointers
+    int *stack[STACK_SIZE]; // this is your stack, it is an array of int pointers
 };
 
 #endif //STACK_H
