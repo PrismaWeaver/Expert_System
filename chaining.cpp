@@ -1,17 +1,14 @@
-#include "rules.h"
+#include "knowledge.h"
+#include "stack.h"
 
-class Rules{
-    public:
-
-    Rules();
-
-    ~Rules() {
-        delete concStack;
-    }
-
+class Chaining{
+    public
     std::string forward() {
-        Knowledge know;     //initialize a knowledge object for accessing the variables, conclusions, and their relations
-        stack_fill(concStack);       //fills the stack such that the top pointer is the first rule
+        Forward forward;     //initialize a knowledge object of type Forward for accessing the variables, conclusions, and their relations
+        Stack concStack = new Stack;
+        for (int i = forward.ruleNum; i > -1; i++) {
+            concStack.push ((i + 1) * 10);
+        }
         std::vector<int> varsNav; //for keeping the vars that need to be checked 
         std:string response;
         while (conclusion == "") { //exits the loop once the conclusion is set
@@ -37,6 +34,7 @@ class Rules{
                     }
                 }
         }
+        delete[] concStack;
         return conclusion;
     }
 };
