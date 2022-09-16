@@ -1,8 +1,8 @@
-#include "knowledge.h"
+#include "CVL.h"
 #include "stack.h"
 
 class Chaining{
-    public:
+    private:
     std::string prompt(int index, Knowledge know) {
         std::string response = "";
         while (response != "T" || response != "F") {
@@ -14,6 +14,7 @@ class Chaining{
         return response;
     }
 
+    public:
     std::string forward() {
         Forward forward;     //initialize a knowledge object of type Forward for accessing the variables, conclusions, and their relations
         Stack concStack;;
