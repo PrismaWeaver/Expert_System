@@ -5,6 +5,12 @@
 
 class Chaining{
     public:
+    Backward back;
+
+    std::string getConc (int index) {
+        return back.conclusionList[index];
+    }
+
     bool prompt(std::string prompt) { //general form for prompting the user, returns a bool based on the response
         char response;
         while (response != 'T' && response != 'F') { //while a correct response has not yet been entered
@@ -108,17 +114,20 @@ class Chaining{
 
     //returns the index of the conclusion which can be accessed via the class object pointer sent through it
     int backward () { 
-        Backward back;
+        std::cout << "backward chaining has begun" << std::endl;
         Queue concQueue, varsQueue;
         int scope = back.clauseNum * back.maxVars, ref, index, peek;
+        std::cout << "conQueue being filled" << std::endl;
         for (int i = 0; i < scope; i++) { //fills the queue with each conclusion
             concQueue.push(i);
         }
+        std::cout << "entering decision tree" << std::endl;
         while (back.conclusion == -1) { //until the conclusion is found
             peek = concQueue.peek(); //check the current conclusion being tested
             ref = peek * back.maxVars; //a reference for the index of the CVL
             for (int u = 0; 0 <= back.maxVars; u++) { //navigates through the CVL for variable indexes
                 index = back.CVL[ref + u];
+                std::cout << "vars related to current conclusion being gathered" << std::endl;
                 if (index != -1) { //prevents out of scope
                     if (back.varsStatus[index] == 0) { //if a required varriable is false, move to the next conclusion to be tested
                         concQueue.pop();
@@ -128,6 +137,7 @@ class Chaining{
                     if (back.varsStatus[index] == -1) varsQueue.push(index); //if a variable hasn't been found yet, add it to the stack
                 }
             }
+            std::cout << "vars with unset states being gathered now" << std::endl;
             if (concQueue.peek() == peek) { //if we are still on the current conclusion (i.e. a required variable wasnt false)
                 while (!varsQueue.isEmpty()) { //until the variable queue has emptied
                     index = varsQueue.peek(); //pulls the index from the queue

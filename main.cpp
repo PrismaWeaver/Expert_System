@@ -2,12 +2,12 @@
 #include "CVL.h"
 
 int main(int argc, char *argv[]) {
-    std::cout << "Welcome to our group's Automobile Repair program. This program will follow a " 
-    << "decision tree and prompt you (the user) to enter true/false statements for " 
-    << "various common problems related to cars to determine the issue with your " 
+    std::cout << "Welcome to our group's Automobile Repair program. This program will follow a \n" 
+    << "decision tree and prompt you (the user) to enter true/false statements for \n" 
+    << "various common problems related to cars to determine the issue with your \n" 
     << "vehicle and steps to fix it!" << std::endl;
-    Backward back;
     Chaining chain;
+    std::cout << "chain created" << std::endl;
     int conclusion = chain.backward(); 
-    std::cout << "The issue with your vehicle appeared to be: " << back.conclusionList[conclusion] << std::endl;
+    std::cout << "The issue with your vehicle appeared to be: " << chain.getConc(conclusion) << std::endl;
 }
