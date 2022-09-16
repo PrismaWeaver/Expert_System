@@ -1,12 +1,12 @@
-#ifndef STACK_H
-#define STACK_H
-#define STACK_SIZE 32
+#ifndef QUEUE_H
+#define QUEUE_H
+#define QUEUE_SIZE 32
 
-class Stack {
+class Queue {
 public:
 
     //constructor
-    Stack();
+    Queue();
 
     //functions
     void push(int);
@@ -17,7 +17,7 @@ public:
 private:
 
     int top; // this is your top index
-    int stack[STACK_SIZE]; // this is your stack, it is an array of int values
+    int queue[QUEUE_SIZE]; // this is your queue, it is an array of int values
 };
 
-#endif
+#endif 

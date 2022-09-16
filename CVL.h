@@ -15,12 +15,10 @@
 //       to navigate through the CVL: take the index of the rule you're working on, multiply by four (this gets you the starting index in the CVL for your rule, to get subsequent vars indexes itterate +1)
 //       to get the rule from the CVL: take the index of the CVL, divide by four (no remainder), and add 1
 class Knowledge {
-    private:
+    public:
     int varsNum = varsList.size();     //keeps the number of vars as its own accessible variable
     int clauseNum = clauseList.size();   //keeps number of conclusions as its own accessible variable
     int maxVars = 4;  //a number related to the max number of variables related to a single conclusion or rule
-
-    public:
     int conclusion = -1; //what this whole thing returns eventually, used to access the conclusionList to return the specified conclusion
 
     //the following have their values pre-defined in the subclasses
@@ -42,12 +40,15 @@ class Knowledge {
     }    
 
     std::vector<int> CVL_fill(std::vector<std::vector<int>> clauseList) {
-       int ref;
-        std::vector<int> CVL_temp(maxVars * clauseNum);
-        for (int i = 0; i < clauseNum; i++) {
-            ref = i * maxVars;
-            for (int u = 0; 0 < clauseList[i].size(); u++) {
-                CVL_temp[ref + u] = clauseList[i][u];
+        int ref;
+        std::vector<int> CVL_temp(maxVars * clauseNum); //sets size of the vector
+        for (int i = 0; i < clauseNum; i++) { //itterates through the conclusions
+            ref = i * maxVars; //gets the reference point within the CVL for the related conclusion
+            for (int u = 0; 0 <= maxVars; u++) { //itterates through the the spaces within the conclusions slot in the CVL
+                if (u < clauseList[i].size()) { //ensures that only the related varaibles are added to the CVL
+                    CVL_temp[ref + u] = clauseList[i][u];
+                }
+                else CVL_temp[ref + u] = -1; //if u is out of scope, fill with -1. ensures entire CVL is filled
             }
         }
         return CVL_temp;
@@ -58,8 +59,8 @@ class Knowledge {
 class Backward: public Knowledge {
     public:
     std::vector<std::string> varsList = {"Leaking Fluid", "Smell of Gasoline", "Have a Green or Pink Color", "Have a Red Color", "Have a Yellow/Dark Brown Color", "Appear Viscous or Oily", //0-5
-                                        "Sensor Problem", "Engine Light", "Oil Warning", "Low Oil Level", "Engine Worn", "Tire Pressure", "Tires not Filled", "Leak in a Tire", "Low Gas Mileage", "Over 5000 Miles Since Last Oil Change", "Air Filter Clogged", //6-16
-                                        "Won't Start", "Gas Empty", "Heard a Cranking Sound from Engine", "Cold outside", "Heard a Clicking Sound from Engine", "Stearing Wheel Locked", "Headlights Turn On", "Fuel Filter Clogged", "Zero on Fuel Pressure Gauge", //17-25
+                                        "Sensor Problem", "Engine Light", "Oil Warning Light", "Low Oil Levels", "Engine Worn", "Tire Pressure Light", "Tires not Filled", "Leak in a Tire", "Low Gas Mileage", "Over 5000 Miles Since Last Oil Change", "Air Filter Clogged", //6-16
+                                        "Won't Start", "Gas Empty", "Cranking Sound from Engine", "Cold outside", "Clicking Sound from Engine", "Stearing Wheel Locked", "Headlights Turn On", "Fuel Filter Clogged", "Fuel Line Read Zero", //17-25
                                         "Parts", "Hood", "Headlights", "Any Light at All", "Wipers", "Wipers Turn On", "Streaking"}; //26-32
     std::vector<std::string> conclusionList ={"Gasoline", "Coolant/Antifreeze" , "Transmission Fluid", "Oil", "Brake Fluid", "Water", //0-5
                                               "Follow Light Code", "Refuel Oil", "Engine Problem", "Oil Sensor Broken", "Refill Tires", "Plug Leak", "Tire PRessure Sensor Broken", "Oil Change Needed", "New Air Filter", "New Spark Plugs", "Healthy", //6-16
@@ -81,10 +82,6 @@ class Forward: public Knowledge {
                                               "Refill Gasoline", "Warm Battery", "Replace Battery", "Electrical Problem in Engine", "Steering Wheel Locked", "Replace Ignition Coil", "Replace Fuel Filter", "Fuel Pump Failure", "Timing Belt Failure", //17-25
                                               "Latch Broken", "Headlights Foggy", "Wiring Issue in Headlights", "Fluid Pipe Clogged", "Replace Wipers", "Electrical Issue in Wipers", "No Parts Need Replacing"}; //26-32
     std::vector<std::string> conclusionList; 
-    std::vector<std::vector<int>> clauseList; 
-
-    void setConc() { //used to insert the conclusion from the backward chaining into the forward chaining's variable list
-
-    }
+    std::vector<std::vector<int>> clauseList;
 };
 #endif
