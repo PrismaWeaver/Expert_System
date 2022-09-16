@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cstring>
 #include "CVL.h"
-#include "stack.h"
 #include "queue.h"
 
 class Chaining{
