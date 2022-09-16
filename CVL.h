@@ -62,8 +62,8 @@ class Backward: public Knowledge {
                                         "Sensor Problem", "Engine Light", "Oil Warning Light", "Low Oil Levels", "Engine Worn", "Tire Pressure Light", "Tires not Filled", "Leak in a Tire", "Low Gas Mileage", "Over 5000 Miles Since Last Oil Change", "Air Filter Clogged", //6-16
                                         "Won't Start", "Gas Empty", "Cranking Sound from Engine", "Cold outside", "Clicking Sound from Engine", "Stearing Wheel Locked", "Headlights Turn On", "Fuel Filter Clogged", "Fuel Line Read Zero", //17-25
                                         "Parts", "Hood", "Headlights", "Any Light at All", "Wipers", "Wipers Turn On", "Streaking"}; //26-32
-    std::vector<std::string> conclusionList ={"Gasoline", "Coolant/Antifreeze" , "Transmission Fluid", "Oil", "Brake Fluid", "Water", //0-5
-                                              "Follow Light Code", "Refuel Oil", "Engine Problem", "Oil Sensor Broken", "Refill Tires", "Plug Leak", "Tire PRessure Sensor Broken", "Oil Change Needed", "New Air Filter", "New Spark Plugs", "Healthy", //6-16
+    std::vector<std::string> conclusionList ={"Gasoline Leak", "Coolant/Antifreeze Leak" , "Transmission Fluid Leak", "Oil Leak", "Brake Fluid Leak", "Water Leak", //0-5
+                                              "Engine Light Code", "Refuel Oil", "Engine Problem", "Oil Sensor Broken", "Refill Tires", "Plug Tire Leak", "Tire Pressure Sensor Broken", "Oil Change Needed", "Change Air Filter", "Change Spark Plugs", "No Issue", //6-16
                                               "Refill Gasoline", "Warm Battery", "Replace Battery", "Electrical Problem in Engine", "Steering Wheel Locked", "Replace Ignition Coil", "Replace Fuel Filter", "Fuel Pump Failure", "Timing Belt Failure", //17-25
                                               "Latch Broken", "Headlights Foggy", "Wiring Issue in Headlights", "Fluid Pipe Clogged", "Replace Wipers", "Electrical Issue in Wipers", "No Parts Need Replacing"}; //26-32
     std::vector<std::vector<int>> clauseList = {
@@ -75,6 +75,7 @@ class Backward: public Knowledge {
 };
 
 //contains the vars/conclusion/combo for the forward chaining section
+/* COMMENTED OUT FOR TESTING BACKWARD CHAINING
 class Forward: public Knowledge {
     public:
     std::vector<std::string> varsList ={"Gasoline", "Coolant/Antifreeze" , "Transmission Fluid", "Oil", "Brake Fluid", "Water", //0-5
@@ -84,4 +85,5 @@ class Forward: public Knowledge {
     std::vector<std::string> conclusionList; 
     std::vector<std::vector<int>> clauseList;
 };
+*/
 #endif

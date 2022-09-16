@@ -6,10 +6,10 @@
 
 class Chaining{
     public:
-    bool prompt(int index, Knowledge *know, std::string prompt) { //general form for prompting the user, returns a bool based on the response
+    bool prompt(std::string prompt) { //general form for prompting the user, returns a bool based on the response
         char response;
         while (response != 'T' && response != 'F') { //while a correct response has not yet been entered
-            std::cout << prompt << know->varsList[index] << ", please respond with T for true and F for false." << std::endl;
+            std::cout << prompt << ", please respond with T for true and F for false." << std::endl;
             std::cin >> response;
             response = toupper(response);
             if (response != 'T' && response != 'F') std::cout << "Please use either T or F as your response." << std::endl;
@@ -17,7 +17,7 @@ class Chaining{
         return (response == 'T');
     }
 
-    std::string PG1 (int index) { //PG stands for prompt generator
+    std::string PG1 (int index) { //PG stands for prompt generator, this one is for the backward chaining
         std::string prompt = "Is the ";
         switch (index) {
             case 0:
@@ -107,73 +107,52 @@ class Chaining{
         return prompt;
     }
 
-    
     //returns the index of the conclusion which can be accessed via the class object pointer sent through it
-    int backward (Backward *back) { 
+    int backward () { 
+        Backward back;
         Queue concQueue, varsQueue;
-        int scope = back->clauseNum * back->maxVars, ref, index, peek;
+        int scope = back.clauseNum * back.maxVars, ref, index, peek;
         for (int i = 0; i < scope; i++) { //fills the queue with each conclusion
             concQueue.push(i);
         }
-        while (back->conclusion == -1) {
-            peek = concQueue.peek();
-            ref = peek * back->maxVars;
-            for (int u = 0; 0 <= back->maxVars; u++) { //navigates through the CVL by variable linked to conclusion
-                index = back->CVL[ref + u];
-                if (index != -1) {
-                    if (back->varsStatus[index] == 0) { //if a required varriable 
+        while (back.conclusion == -1) { //until the conclusion is found
+            peek = concQueue.peek(); //check the current conclusion being tested
+            ref = peek * back.maxVars; //a reference for the index of the CVL
+            for (int u = 0; 0 <= back.maxVars; u++) { //navigates through the CVL for variable indexes
+                index = back.CVL[ref + u];
+                if (index != -1) { //prevents out of scope
+                    if (back.varsStatus[index] == 0) { //if a required varriable is false, move to the next conclusion to be tested
                         concQueue.pop();
+                        while (!varsQueue.isEmpty()) varsQueue.pop(); //if previous variables had been added to the queue, this removes them
                         break;
                     }
-                    if (back->varsStatus[index] == -1) varsQueue.push(index);
+                    if (back.varsStatus[index] == -1) varsQueue.push(index); //if a variable hasn't been found yet, add it to the stack
                 }
             }
-            if (concQueue.peek() == peek) {
-                while (!varsQueue.isEmpty()) {
-                    index = varsQueue.peek();
-                    if (prompt(index, back, PG1(index))) {
-                        back->varsStatus[index] = 1;
+            if (concQueue.peek() == peek) { //if we are still on the current conclusion (i.e. a required variable wasnt false)
+                while (!varsQueue.isEmpty()) { //until the variable queue has emptied
+                    index = varsQueue.peek(); //pulls the index from the queue
+                    if (prompt(PG1(index) + back.varsList[index])) { //generates a prompt for the user, if T is entered, this procs
+                        back.varsStatus[index] = 1;
                         varsQueue.pop();
                     }
-                    else {
-                        back->varsStatus[index] = 0;
+                    else { //if F was entered, this procs
+                        back.varsStatus[index] = 0;
                         while (!varsQueue.isEmpty()) varsQueue.pop();
                         concQueue.pop();
                     }
                 }
             }
+            if (concQueue.peek() == peek) back.conclusion = peek; //if this is still true at this point, then we have a conclusion!
+            if (concQueue.isEmpty()) back.conclusion = 16; //if all conclusions visited, sets conclusion value to 16: No Issue
         }
+        return back.conclusion;
     }
 
     //returns the index of the conclusion which can be accessed via the class object pointer sent through it, uses backwards class object to fill variable based on the conclusion
+    /* COMMENTED OUT TO TEST BACKWARD CHAINING
     int forward(Backward *back, Forward *forw) { 
-        Forward forward;     //initialize a knowledge object of type Forward for accessing the variables, conclusions, and their relations
-        forw->varsStatus[back->conclusion] = 1; //sets the variable in foward reference by the conclusion from backward to True
         
-        
-        std::string response;
-        while (forward.conclusion == "") { //exits the loop once the conclusion is set
-            varsNav = KB[concStack.peek()];
-            for (int i = 0; 0 < varsNav.size(); i++) {
-                    while (know.varsStatus[varsNav[i]] == -1) {
-                        response = prompt(varsNav[i], forward);
-                        if (response == T) know.varsStatus[varsNav[i]] = 1;
-                        else if (response == F) know.varsStatus[varsNav[i]] = 0;
-                        else std::cout << "Please enter either T or F" << std::endl;
-                    }
-                    if (know.varsStatus[varsNav[i]] == 1) {
-                        if ((i + 1) == varsNav.size()) {
-                            forward.conclusion = ""; //need to do some fancy math here to get the correct conclusion
-                            break;
-                        }
-                        continue;
-                    }
-                    if (know.varsStatus[varsNav[i]] == 0) {
-                        concStack.pop();
-                        break;
-                    }
-                }
-        }
-        return forward.conclusion;
     }
+    */
 };
